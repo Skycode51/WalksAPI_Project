@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WalksAPI.Data;
 using WalksAPI.Models.Domain;
-using WalksAPI.Models.Domain.DTOs;
+using WalksAPI.Models.DTOs;
 using WalksAPI.Repositories;
 
 namespace WalksAPI.Controllers

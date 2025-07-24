@@ -1,4 +1,4 @@
-﻿namespace WalksAPI.Models.Domain.DTOs
+﻿namespace WalksAPI.Models.DTOs
 {
     public class AddRegionRequestDTO
     {

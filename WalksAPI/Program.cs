@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WalksAPI.Data;
 using WalksAPI.Mappings;
+using WalksAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<WalksDbContext>(options =>
 
 // Registering the repository
 builder.Services.AddScoped<WalksAPI.Repositories.IRegionRepository, WalksAPI.Repositories.SQLRegionRepository>();
+builder.Services.AddScoped<WalksAPI.Repositories.IWalkRepository, WalksAPI.Repositories.SQLWalkRepository>();
 
 //AutoMapper Injection services
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
