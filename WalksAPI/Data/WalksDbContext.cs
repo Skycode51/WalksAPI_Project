@@ -27,7 +27,7 @@ namespace WalksAPI.Data
             // Seed data for Difficulties
             // easy, Medium, Hard
 
-            var difficulties = new List<Difficulty>()
+            var difficulties = new List <Difficulty>()
             {
                 new Difficulty()
                 {

@@ -1,8 +1,16 @@
-﻿namespace WalksAPI.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WalksAPI.Models.DTOs
 {
     public class AddRegionRequestDTO
     {
+        [Required]
+        [MinLength(3, ErrorMessage ="code has to be a minium of 3 character")]
+        [MaxLength(3, ErrorMessage = "code has to be a minium of 3 character")]
         public string Code { get; set; }
+        [Required]
+        [MaxLength(100, ErrorMessage = "Name has to be a maximum of 100 characters")]
+
         public string Name { get; set; }
         public string? RegionImageUrl { get; set; }
 

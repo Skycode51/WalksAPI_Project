@@ -65,17 +65,26 @@ namespace WalksAPI.Controllers
         [HttpPost]
         public  async Task<IActionResult> Create([FromBody] AddRegionRequestDTO requestDTO)
         {
-            // Map DTO to Domain Model  using Mapper
-            var regionDomain = mapper.Map<Regions>(requestDTO);
+            // Validate 
+            if (ModelState.IsValid)
+            {
 
-            // Add Domain Model to Database
-            regionDomain = await regionRepository.CreateAsync(regionDomain);
+                // Map DTO to Domain Model  using Mapper
+                var regionDomain = mapper.Map<Regions>(requestDTO);
 
-            //Map Domain model back to DTO
-            var region = mapper.Map<RegionsDTO>(regionDomain);
+                // Add Domain Model to Database
+                regionDomain = await regionRepository.CreateAsync(regionDomain);
 
-            return CreatedAtAction(nameof(GetById), new { id = regionDomain.Id }, regionDomain);
+                //Map Domain model back to DTO
+                var region = mapper.Map<RegionsDTO>(regionDomain);
 
+                return CreatedAtAction(nameof(GetById), new { id = regionDomain.Id }, regionDomain);
+            } 
+            else
+            {
+                // If the model state is invalid, return a BadRequest with the validation errors
+                return BadRequest(ModelState);
+            }
 
         }
 
@@ -84,6 +93,8 @@ namespace WalksAPI.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDTO UpdaterequestDTO)
         {
+            if (ModelState.IsValid)
+            { 
 
             //Map DTO to Domain Model
             var regionDomain = mapper.Map<Regions>(UpdaterequestDTO);
@@ -98,6 +109,12 @@ namespace WalksAPI.Controllers
 
             // Map Domain model back to DTO
             return Ok(mapper.Map<RegionsDTO>(regionDomain));
+            }
+            else
+            {
+                // If the model state is invalid, return a BadRequest with the validation errors
+                return BadRequest(ModelState);
+            }
         }
 
         //DELETE : https://localhost:7091/api/regions/{id}

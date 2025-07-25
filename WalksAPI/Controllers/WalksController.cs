@@ -15,7 +15,7 @@ namespace WalksAPI.Controllers
         private readonly IMapper mapper;
         private readonly IWalkRepository walkRepository;
 
-        public WalksController(IMapper mapper, IWalkRepository walkRepository) 
+        public WalksController(IMapper mapper, IWalkRepository walkRepository)
         {
             this.mapper = mapper;
             this.walkRepository = walkRepository;
@@ -28,6 +28,8 @@ namespace WalksAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddWalksRequestDto addWalksRequestDto)
         {
+            if (ModelState.IsValid)
+            { 
               // Map DTO to Domain Model
             var walkDomainModel = mapper.Map<Walks>(addWalksRequestDto);
             
@@ -35,6 +37,11 @@ namespace WalksAPI.Controllers
             //Map Domain model to DTO
 
             return Ok(mapper.Map<WalksDTO>(walkDomainModel));
+            }
+            else 
+            {
+                return BadRequest(ModelState);
+            }
 
         }
 
@@ -73,6 +80,9 @@ namespace WalksAPI.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkRequestDTO updateWalksRequestDto)
         {
+
+            if (ModelState.IsValid)
+            {
             // Get walk by Id from the repository
             var walkDomainModel = mapper.Map<Walks>(updateWalksRequestDto);
 
@@ -86,6 +96,11 @@ namespace WalksAPI.Controllers
 
             // Map Domain Model to DTO
             return Ok(mapper.Map<WalksDTO>(walkDomainModel));
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
 
